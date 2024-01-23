@@ -3,7 +3,9 @@
     <h1>Movie List</h1>
     <ul v-if="movies.length">
       <li v-for="movie in movies" :key="movie.id">
-        {{ movie.title }}
+        <h2>{{ movie.title }}</h2>
+        <p>Release Date: {{ movie.releaseDate }}</p>
+        <p>Rating: {{ movie.voteAverage }}</p>
         <button :style="favoriteButtonStyle(movie)" @click="toggleFavorite(movie)">
           {{ isFavorite(movie) ? 'Unmark Favorite' : 'Mark as Favorite' }}
         </button>
@@ -38,11 +40,19 @@ export default {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.movies.push(...json.results)
+          this.movies.push(
+            ...json.results.map((movie) => ({
+              id: movie.id,
+              title: movie.title,
+              releaseDate: movie.release_date,
+              voteAverage: movie.vote_average
+            }))
+          )
           this.totalPages = json.total_pages
         })
         .catch((err) => console.error('error:' + err))
     },
+
     toggleFavorite(movie) {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
       if (favorites[movie.id]) {
