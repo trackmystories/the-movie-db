@@ -1,5 +1,6 @@
 <template>
   <div id="movie-list-container">
+    <movie-search @search-applied="handleSearch"></movie-search>
     <h1>Movie List</h1>
     <ul v-if="movies.length">
       <li v-for="movie in movies" :key="movie.id">
@@ -18,8 +19,13 @@
 </template>
 
 <script>
+import MovieSearch from '../components/MovieSearch.vue'
+
 export default {
   name: 'MovieList',
+  components: {
+    MovieSearch
+  },
   data() {
     return {
       movies: [],
@@ -30,9 +36,13 @@ export default {
     }
   },
   methods: {
-    fetchMovies() {
+    fetchMovies(searchQuery = '') {
       const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
-      const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${this.currentPage}&sort_by=popularity.desc&api_key=${apiKey}`
+      let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${this.currentPage}&sort_by=popularity.desc&api_key=${apiKey}`
+
+      if (searchQuery) {
+        url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchQuery)}&page=${this.currentPage}&api_key=${apiKey}&language=en-US&include_adult=false`
+      }
 
       fetch(url, {
         method: 'GET',
@@ -40,14 +50,12 @@ export default {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.movies.push(
-            ...json.results.map((movie) => ({
-              id: movie.id,
-              title: movie.title,
-              releaseDate: movie.release_date,
-              voteAverage: movie.vote_average
-            }))
-          )
+          this.movies = json.results.map((movie) => ({
+            id: movie.id,
+            title: movie.title,
+            releaseDate: movie.release_date,
+            voteAverage: movie.vote_average
+          }))
           this.totalPages = json.total_pages
         })
         .catch((err) => console.error('error:' + err))
@@ -95,6 +103,12 @@ export default {
         this.currentPage++
         this.fetchMovies()
       }
+    },
+
+    handleSearch(searchQuery) {
+      this.currentPage = 1
+      this.movies = []
+      this.fetchMovies(searchQuery)
     }
   },
   mounted() {
