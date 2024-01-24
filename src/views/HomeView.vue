@@ -7,15 +7,13 @@
     <ul v-if="movies.length">
       <li class="li" v-for="movie in movies" :key="movie.id">
         <movie-card
-          v-for="movie in movies"
-          :key="movie.id"
           :movie="movie"
           :is-favorite="isFavorite(movie)"
           @toggle-favorite="toggleFavorite"
-          :release-date="movie.release_date"
-          :rating="movie.vote_average"
+          :release-date="movie.releaseDate"
+          :rating="movie.voteAverage"
           :show-summary="true"
-          :on-card-click="handleCardClick"
+          @on-card-click="handleCardClick(movie)"
         />
       </li>
     </ul>
@@ -64,17 +62,19 @@ export default {
       })
         .then((res) => res.json())
         .then((json) => {
-          this.movies = json.results.map((movie) => ({
-            id: movie.id,
-            title: movie.title,
-            releaseDate: movie.release_date,
-            voteAverage: movie.vote_average
-          }))
+          // Append fetched movies to the existing movies array
+          this.movies = this.movies.concat(
+            json.results.map((movie) => ({
+              id: movie.id,
+              title: movie.title,
+              releaseDate: movie.release_date,
+              voteAverage: movie.vote_average
+            }))
+          )
           this.totalPages = json.total_pages
         })
         .catch((err) => console.error('error:' + err))
     },
-
     toggleFavorite(movie) {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
       if (favorites[movie.id]) {
@@ -129,6 +129,15 @@ export default {
       this.currentPage = 1
       this.movies = []
       this.fetchMovies(filterSortData.genre, filterSortData.sort)
+    },
+    handleCardClick(movie) {
+      console.log('click')
+      this.selectedMovie = movie
+    },
+
+    closeMovieView() {
+      // Close the MovieView component
+      this.selectedMovie = null
     }
   },
   mounted() {

@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     movieImageUrl() {
-      return `https://image.tmdb.org/t/p/w342/${this.movie.poster_path}`
+      return `https://image.tmdb.org/t/p/w342${this.movie.poster_path}`
     },
     favoriteButtonStyle() {
       return {
@@ -41,6 +41,9 @@ export default {
   methods: {
     toggleFavorite() {
       this.$emit('toggle-favorite', this.movie)
+    },
+    handleCardClick() {
+      this.$emit('on-card-click')
     }
   }
 }

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <input v-model="searchQuery" @input="applySearch" placeholder="Search movies..." />
+    <input
+      class="input"
+      v-model="searchQuery"
+      @input="applySearch"
+      placeholder="Search movies..."
+    />
   </div>
 </template>
 
@@ -18,3 +23,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.input {
+  widht: 500px;
+  height: 50px;
+  padding: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+</style>

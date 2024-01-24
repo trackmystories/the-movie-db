@@ -12,6 +12,7 @@
           :release-date="favorite.movie.release_date"
           :rating="favorite.movie.vote_average"
           :show-summary="false"
+          @on-card-click="handleCardClick"
         />
         <p>Note: {{ favorite.note }}</p>
       </li>
@@ -105,6 +106,10 @@ export default {
       } else if (sortOrder === 'rating') {
         this.favorites.sort((a, b) => b.movie.vote_average - a.movie.vote_average)
       }
+    },
+    handleCardClick(movie) {
+      console.log('click')
+      this.selectedMovie = movie
     }
   }
 }
