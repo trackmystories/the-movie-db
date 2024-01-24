@@ -6,8 +6,6 @@
     <ul v-if="movies.length">
       <li class="li" v-for="movie in movies" :key="movie.id">
         <movie-card
-          v-for="movie in movies"
-          :key="movie.id"
           :movie="movie"
           :is-favorite="isFavorite(movie)"
           @toggle-favorite="toggleFavorite"
@@ -117,6 +115,7 @@ export default {
         color: 'white'
       }
     },
+
     loadMoreMovies() {
       if (this.currentPage < this.totalPages) {
         this.currentPage++

@@ -19,6 +19,8 @@ import { RouterLink, RouterView } from 'vue-router'
 header {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   background-color: #f8f8f8;
   border-bottom: 1px solid #e7e7e7;
@@ -40,7 +42,7 @@ nav {
 }
 
 .nav-link:hover {
-  color: orange;
+  color: green;
 }
 
 .active {
