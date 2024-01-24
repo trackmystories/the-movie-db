@@ -6,7 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: 'the-movie-db',
+  base: '/the-movie-db/',
   plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
