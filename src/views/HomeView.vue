@@ -1,7 +1,6 @@
 <template>
   <div id="movie-list-container">
     <movie-filter-sort @filter-sort-changed="handleFilterSortChange"></movie-filter-sort>
-    <movie-search @search-applied="handleSearch"></movie-search>
 
     <h1>Movie List</h1>
     <ul v-if="movies.length">
@@ -122,12 +121,6 @@ export default {
         this.currentPage++
         this.fetchMovies()
       }
-    },
-
-    handleSearch(searchQuery) {
-      this.currentPage = 1
-      this.movies = []
-      this.fetchMovies(searchQuery)
     },
 
     handleFilterSortChange(filterSortData) {
