@@ -61,7 +61,7 @@ export default {
 #movie-view .img {
   width: auto;
   height: 500px;
-  object-fit: containe;
+  object-fit: contain;
 }
 
 .text {
