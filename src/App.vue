@@ -28,23 +28,23 @@ nav {
   width: 100%;
   text-align: center;
   padding: 1rem 0;
-  background-color: #e8edec;
+  background-color: #333;
 }
 
 .nav-link {
   margin: 0 1rem;
   text-decoration: none;
-  color: #333;
+  color: #fff;
   font-weight: bold;
   transition: color 0.3s;
 }
 
 .nav-link:hover {
-  color: green;
+  color: orange;
 }
 
 .active {
-  color: #d15517;
+  color: red;
 }
 
 @media (max-width: 600px) {

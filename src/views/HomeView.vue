@@ -25,14 +25,12 @@
 </template>
 
 <script>
-import MovieSearch from '../components/MovieSearch.vue'
 import MovieFilterSort from '../components/MovieFilterSort.vue'
 import MovieCard from '../components/MovieCard.vue'
 
 export default {
   name: 'MovieList',
   components: {
-    MovieSearch,
     MovieFilterSort,
     MovieCard
   },
@@ -75,7 +73,9 @@ export default {
               id: movie.id,
               title: movie.title,
               releaseDate: movie.release_date,
-              voteAverage: movie.vote_average
+              voteAverage: movie.vote_average,
+              posterPath: movie.poster_path,
+              overview: movie.overview
             }))
           )
           this.totalPages = json.total_pages
@@ -99,6 +99,7 @@ export default {
     updateFavorites() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
       this.favorites = Object.values(favorites)
+      console.log('Object.values(favorites)', Object.values(favorites))
     },
 
     fetchFavorites() {

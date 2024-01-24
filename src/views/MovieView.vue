@@ -2,7 +2,7 @@
   <div id="movie-view" v-if="movie">
     <h1>Movie Details</h1>
     <h1>{{ movie.title }}</h1>
-    <img :src="movie.posterPath" alt="Movie Poster" />
+    <img :src="movie.poster_path" alt="Movie Poster" />
     <p>Release Date: {{ movie.release_date }}</p>
     <p>Rating: {{ movie.vote_average }}</p>
     <p>Overview: {{ movie.overview }}</p>

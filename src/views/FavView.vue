@@ -50,6 +50,12 @@ export default {
       this.favorites = this.originalFavorites
     },
 
+    handleFilterSortChange(filterSortData) {
+      this.currentPage = 1
+      this.movies = []
+      this.fetchMovies(filterSortData.genre, filterSortData.sort)
+    },
+
     handleSearch(searchQuery) {
       this.searchQuery = searchQuery.toLowerCase()
       this.favorites = this.originalFavorites.filter((favorite) =>
