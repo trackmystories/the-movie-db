@@ -1,17 +1,18 @@
 <template>
   <div id="fav-container">
+    <movie-search @search-applied="handleSearch"></movie-search>
+
     <h1>Favorite Movies</h1>
     <ul v-if="favorites.length">
-      <li v-for="favorite in favorites" :key="favorite.movie.id">
-        <img :src="'https://image.tmdb.org/t/p/w500' + favorite.movie.poster_path" alt="Poster" />
-        <h2>{{ favorite.movie.title }}</h2>
-        <p>Comment: {{ favorite.note }}</p>
-        <button
-          :style="favoriteButtonStyle(favorite.movie)"
-          @click="toggleFavorite(favorite.movie)"
-        >
-          {{ isFavorite(favorite.movie) ? 'Unmark Favorite' : 'Mark as Favorite' }}
-        </button>
+      <li class="li" v-for="favorite in favorites" :key="favorite.movie.id">
+        <movie-card
+          :movie="favorite.movie"
+          :is-favorite="isFavorite(favorite.movie)"
+          @toggle-favorite="toggleFavorite"
+          :release-date="favorite.movie.release_date"
+          :rating="favorite.movie.vote_average"
+          :show-summary="false"
+        />
         <p>Note: {{ favorite.note }}</p>
       </li>
     </ul>
@@ -20,11 +21,20 @@
 </template>
 
 <script>
+import MovieSearch from '../components/MovieSearch.vue'
+import MovieCard from '../components/MovieCard.vue'
+
 export default {
   name: 'FavView',
+  components: {
+    MovieSearch,
+    MovieCard
+  },
   data() {
     return {
-      favorites: []
+      originalFavorites: [],
+      favorites: [],
+      searchQuery: ''
     }
   },
   mounted() {
@@ -33,7 +43,15 @@ export default {
   methods: {
     fetchFavorites() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
-      this.favorites = Object.values(favorites)
+      this.originalFavorites = Object.values(favorites)
+      this.favorites = this.originalFavorites
+    },
+
+    handleSearch(searchQuery) {
+      this.searchQuery = searchQuery.toLowerCase()
+      this.favorites = this.originalFavorites.filter((favorite) =>
+        favorite.movie.title.toLowerCase().includes(this.searchQuery)
+      )
     },
 
     favoriteButtonStyle(movie) {
@@ -74,5 +92,9 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 100px;
+}
+
+#fav-container .li {
+  list-style-type: none;
 }
 </style>
