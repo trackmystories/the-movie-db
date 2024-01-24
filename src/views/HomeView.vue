@@ -1,16 +1,22 @@
 <template>
   <div id="movie-list-container">
+    <movie-filter-sort @filter-sort-changed="handleFilterSortChange"></movie-filter-sort>
     <movie-search @search-applied="handleSearch"></movie-search>
+
     <h1>Movie List</h1>
     <ul v-if="movies.length">
-      <li v-for="movie in movies" :key="movie.id">
-        <h2>{{ movie.title }}</h2>
-        <p>Release Date: {{ movie.releaseDate }}</p>
-        <p>Rating: {{ movie.voteAverage }}</p>
-        <button :style="favoriteButtonStyle(movie)" @click="toggleFavorite(movie)">
-          {{ isFavorite(movie) ? 'Unmark Favorite' : 'Mark as Favorite' }}
-        </button>
-        <p v-if="isFavorite(movie)">Note: {{ getFavorite(movie).note }}</p>
+      <li class="li" v-for="movie in movies" :key="movie.id">
+        <movie-card
+          v-for="movie in movies"
+          :key="movie.id"
+          :movie="movie"
+          :is-favorite="isFavorite(movie)"
+          @toggle-favorite="toggleFavorite"
+          :release-date="movie.release_date"
+          :rating="movie.vote_average"
+          :show-summary="true"
+          :on-card-click="handleCardClick"
+        />
       </li>
     </ul>
     <button v-if="currentPage < totalPages" @click="loadMoreMovies">Load More</button>
@@ -20,11 +26,15 @@
 
 <script>
 import MovieSearch from '../components/MovieSearch.vue'
+import MovieFilterSort from '../components/MovieFilterSort.vue'
+import MovieCard from '../components/MovieCard.vue'
 
 export default {
   name: 'MovieList',
   components: {
-    MovieSearch
+    MovieSearch,
+    MovieFilterSort,
+    MovieCard
   },
   data() {
     return {
@@ -36,12 +46,18 @@ export default {
     }
   },
   methods: {
-    fetchMovies(searchQuery = '') {
+    fetchMovies(genre = '', sort = '') {
       const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
-      let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${this.currentPage}&sort_by=popularity.desc&api_key=${apiKey}`
+      let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&include_adult=false&include_video=false&page=${this.currentPage}`
 
-      if (searchQuery) {
-        url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(searchQuery)}&page=${this.currentPage}&api_key=${apiKey}&language=en-US&include_adult=false`
+      // Append genre filter if present
+      if (genre) {
+        url += `&with_genres=${encodeURIComponent(genre)}`
+      }
+
+      // Append sort parameter if present
+      if (sort) {
+        url += `&sort_by=${encodeURIComponent(sort)}`
       }
 
       fetch(url, {
@@ -109,6 +125,12 @@ export default {
       this.currentPage = 1
       this.movies = []
       this.fetchMovies(searchQuery)
+    },
+
+    handleFilterSortChange(filterSortData) {
+      this.currentPage = 1
+      this.movies = []
+      this.fetchMovies(filterSortData.genre, filterSortData.sort)
     }
   },
   mounted() {
@@ -125,5 +147,8 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 100px;
+}
+#movie-list-container .li {
+  list-style-type: none;
 }
 </style>

@@ -3,7 +3,9 @@
     <h1>Favorite Movies</h1>
     <ul v-if="favorites.length">
       <li v-for="favorite in favorites" :key="favorite.movie.id">
+        <img :src="'https://image.tmdb.org/t/p/w500' + favorite.movie.poster_path" alt="Poster" />
         <h2>{{ favorite.movie.title }}</h2>
+        <p>Comment: {{ favorite.note }}</p>
         <button
           :style="favoriteButtonStyle(favorite.movie)"
           @click="toggleFavorite(favorite.movie)"
