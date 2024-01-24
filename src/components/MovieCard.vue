@@ -3,8 +3,8 @@
     <img :src="movieImageUrl" alt="Movie Poster" class="movie-poster" />
     <div class="movie-info">
       <h3>{{ movie.title }}</h3>
-      <h3>Release Date: {{ movie.original_language }}</h3>
-      <p>Rating: {{ movie.vote_average }}</p>
+      <p>Release Date: {{ movie.releaseDate }}</p>
+      <p>Rating: {{ movie.voteAverage }}</p>
     </div>
     <button :style="favoriteButtonStyle" @click="toggleFavorite">
       {{ isFavorite ? 'Unmark Favorite' : 'Mark as Favorite' }}

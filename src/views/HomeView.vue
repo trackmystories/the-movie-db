@@ -50,12 +50,10 @@ export default {
       const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&include_adult=false&include_video=false&page=${this.currentPage}`
 
-      // Append genre filter if present
       if (genre) {
         url += `&with_genres=${encodeURIComponent(genre)}`
       }
 
-      // Append sort parameter if present
       if (sort) {
         url += `&sort_by=${encodeURIComponent(sort)}`
       }
