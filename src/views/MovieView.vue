@@ -1,7 +1,11 @@
 <template>
   <div id="movie-view" v-if="movie">
-    <h1>Movie Details: {{ movie.title }}</h1>
-    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="Movie Poster" />
+    <h1 class="text">Movie Details: {{ movie.title }}</h1>
+    <img
+      class="img"
+      :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      alt="Movie Poster"
+    />
     <p>Release Date: {{ movie.release_date }}</p>
     <p>Rating: {{ movie.vote_average }}</p>
     <p>
@@ -47,9 +51,20 @@ export default {
 <style scoped>
 #movie-view {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify: center;
-  padding: 150px;
+  margin-top: 80px;
+}
+
+#movie-view .img {
+  width: auto;
+  height: 500px;
+  object-fit: containe;
+}
+
+.text {
+  font-size: 30px;
 }
 </style>
