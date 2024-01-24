@@ -78,7 +78,7 @@ export default {
     toggleFavorite(movie) {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
       if (favorites[movie.id]) {
-        delete favorites[movie.id] // Remove from favorites
+        delete favorites[movie.id]
       } else {
         let note = prompt('Add a note for this movie:')
         favorites[movie.id] = { movie, note }

@@ -1,6 +1,7 @@
 <template>
   <div class="movie-card">
     <img :src="movieImageUrl" alt="Movie Poster" class="movie-poster" />
+
     <div class="movie-info">
       <h3>{{ movie.title }}</h3>
       <p>Release Date: {{ movie.releaseDate }}</p>
@@ -25,7 +26,7 @@ export default {
   },
   computed: {
     movieImageUrl() {
-      return `https://image.tmdb.org/t/p/w500${this.movie.poster_path}`
+      return `https://image.tmdb.org/t/p/w300${this.movie.poster_path}`
     },
     favoriteButtonStyle() {
       return {

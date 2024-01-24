@@ -37,6 +37,7 @@ export default {
       searchQuery: ''
     }
   },
+
   mounted() {
     this.fetchFavorites()
   },
@@ -80,6 +81,30 @@ export default {
 
     isFavorite(movie) {
       return this.favorites.some((fav) => fav.movie.id === movie.id)
+    },
+
+    filterFavorites(genre) {
+      try {
+        console.log('Filtering by genre:', genre)
+        if (!genre) {
+          this.favorites = [...this.originalFavorites]
+        } else {
+          this.favorites = this.originalFavorites.filter(
+            (favorite) =>
+              favorite.movie.genre_ids && favorite.movie.genre_ids.includes(parseInt(genre))
+          )
+        }
+      } catch (error) {
+        console.error('Error in filterFavorites:', error)
+      }
+    },
+
+    sortFavorites(sortOrder) {
+      if (sortOrder === 'title') {
+        this.favorites.sort((a, b) => a.movie.title.localeCompare(b.movie.title))
+      } else if (sortOrder === 'rating') {
+        this.favorites.sort((a, b) => b.movie.vote_average - a.movie.vote_average)
+      }
     }
   }
 }
