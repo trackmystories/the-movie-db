@@ -7,13 +7,16 @@
     <ul v-if="movies.length">
       <li class="li" v-for="movie in movies" :key="movie.id">
         <movie-card
+          v-for="movie in movies"
+          :key="movie.id"
           :movie="movie"
           :is-favorite="isFavorite(movie)"
           @toggle-favorite="toggleFavorite"
           :release-date="movie.releaseDate"
           :rating="movie.voteAverage"
           :show-summary="true"
-          @on-card-click="handleCardClick(movie)"
+          @card-clicked="handleCardClick"
+          :clickCard="'click to view details screen'"
         />
       </li>
     </ul>
@@ -46,6 +49,9 @@ export default {
   methods: {
     fetchMovies(genre = '', sort = '') {
       const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
+      const token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYWZiOWU0MzEwZTU3MmQ0NTY0Y2NjMjU1ZDI2NzMyMiIsInN1YiI6IjY1NTM1MjM1ZDRmZTA0MDEzOTgxMjVmNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CEYYvydoCUUJgTR7eskapz3sGiU-Y8gjzE9nmJMXOdE'
+
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&include_adult=false&include_video=false&page=${this.currentPage}`
 
       if (genre) {
@@ -58,11 +64,13 @@ export default {
 
       fetch(url, {
         method: 'GET',
-        headers: { accept: 'application/json' }
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${token}`
+        }
       })
         .then((res) => res.json())
         .then((json) => {
-          // Append fetched movies to the existing movies array
           this.movies = this.movies.concat(
             json.results.map((movie) => ({
               id: movie.id,
@@ -75,6 +83,7 @@ export default {
         })
         .catch((err) => console.error('error:' + err))
     },
+
     toggleFavorite(movie) {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
       if (favorites[movie.id]) {
@@ -99,11 +108,7 @@ export default {
     },
 
     isFavorite(movie) {
-      return this.favorites.some((fav) => fav.movie.id === movie.id)
-    },
-
-    getFavorite(movie) {
-      return this.favorites.find((fav) => fav.movie.id === movie.id)
+      return this.favorites.some((fav) => fav && fav.movie && fav.movie.id === movie.id)
     },
 
     favoriteButtonStyle(movie) {
@@ -130,14 +135,8 @@ export default {
       this.movies = []
       this.fetchMovies(filterSortData.genre, filterSortData.sort)
     },
-    handleCardClick(movie) {
-      console.log('click')
-      this.selectedMovie = movie
-    },
-
-    closeMovieView() {
-      // Close the MovieView component
-      this.selectedMovie = null
+    handleCardClick(movieId) {
+      this.$router.push({ path: `/movie/${movieId}` })
     }
   },
   mounted() {

@@ -5,8 +5,10 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/favorites">Favorites</RouterLink>
+      <RouterLink to="/" class="nav-link" :class="{ active: $route.path === '/' }">Home</RouterLink>
+      <RouterLink to="/favorites" class="nav-link" :class="{ active: $route.path === '/favorites' }"
+        >Favorites</RouterLink
+      >
     </nav>
   </header>
 
@@ -26,12 +28,23 @@ nav {
   width: 100%;
   text-align: center;
   padding: 1rem 0;
+  background-color: #e8edec;
 }
 
-nav a {
+.nav-link {
   margin: 0 1rem;
   text-decoration: none;
   color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: green;
+}
+
+.active {
+  color: #d15517;
 }
 
 @media (max-width: 600px) {

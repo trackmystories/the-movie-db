@@ -1,26 +1,40 @@
 <template>
-  <div id="movie-view">
-    <!-- Display movie details here -->
-    <h2>{{ selectedMovie.title }}</h2>
-    <p>Release Date: {{ selectedMovie.releaseDate }}</p>
-    <p>Vote Average: {{ selectedMovie.voteAverage }}</p>
-
-    <!-- Add additional movie details as needed -->
-
-    <button @click="goBack">Back to Movie List</button>
+  <div id="movie-view" v-if="movie">
+    <h1>Movie Details</h1>
+    <h1>{{ movie.title }}</h1>
+    <img :src="movie.posterPath" alt="Movie Poster" />
+    <p>Release Date: {{ movie.release_date }}</p>
+    <p>Rating: {{ movie.vote_average }}</p>
+    <p>Overview: {{ movie.overview }}</p>
   </div>
+  <div v-else>Loading movie details...</div>
 </template>
 
 <script>
 export default {
-  name: 'MovieView',
   props: {
-    selectedMovie: Object
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      movie: null
+    }
+  },
+  created() {
+    this.fetchMovieDetails()
   },
   methods: {
-    goBack() {
-      // Emit an event to notify the parent component to hide the MovieView
-      this.$emit('close-movie-view')
+    fetchMovieDetails() {
+      const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
+      fetch(`https://api.themoviedb.org/3/movie/${this.id}?api_key=${apiKey}&language=en-US`)
+        .then((res) => res.json())
+        .then((data) => {
+          this.movie = data
+        })
+        .catch((err) => console.error('error:', err))
     }
   }
 }
@@ -28,9 +42,10 @@ export default {
 
 <style scoped>
 #movie-view {
-  margin: 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify: center;
+  padding: 150px;
 }
 </style>

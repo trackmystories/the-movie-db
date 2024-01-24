@@ -1,5 +1,8 @@
 <template>
   <div class="movie-card">
+    <h1>
+      Movie Detials <span @click="handleCardClick" class="click-card">{{ clickCard }}</span>
+    </h1>
     <img :src="movieImageUrl" alt="Movie Poster" class="movie-poster" />
 
     <div class="movie-info">
@@ -22,11 +25,12 @@ export default {
     showSummary: Boolean,
     releaseDate: String,
     rating: Number,
-    onCardClick: Function
+    onCardClick: Function,
+    clickCard: String
   },
   computed: {
     movieImageUrl() {
-      return `https://image.tmdb.org/t/p/w342${this.movie.poster_path}`
+      return `https://image.tmdb.org/t/p/w342${this.movie.posterPath}`
     },
     favoriteButtonStyle() {
       return {
@@ -43,7 +47,7 @@ export default {
       this.$emit('toggle-favorite', this.movie)
     },
     handleCardClick() {
-      this.$emit('on-card-click')
+      this.$emit('card-clicked', this.movie.id)
     }
   }
 }
@@ -67,5 +71,10 @@ export default {
 
 .movie-info {
   margin-top: 10px;
+}
+
+.click-card {
+  font-size: 1rem;
+  color: blue;
 }
 </style>

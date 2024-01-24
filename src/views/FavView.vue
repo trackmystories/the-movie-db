@@ -1,7 +1,7 @@
 <template>
   <div id="fav-container">
     <movie-search @search-applied="handleSearch"></movie-search>
-
+    <movie-filter-sort @filter-sort-changed="handleFilterSortChange"></movie-filter-sort>
     <h1>Favorite Movies</h1>
     <ul v-if="favorites.length">
       <li class="li" v-for="favorite in favorites" :key="favorite.movie.id">
@@ -12,7 +12,6 @@
           :release-date="favorite.movie.release_date"
           :rating="favorite.movie.vote_average"
           :show-summary="false"
-          @on-card-click="handleCardClick"
         />
         <p>Note: {{ favorite.note }}</p>
       </li>
@@ -23,13 +22,15 @@
 
 <script>
 import MovieSearch from '../components/MovieSearch.vue'
+import MovieFilterSort from '../components/MovieFilterSort.vue'
 import MovieCard from '../components/MovieCard.vue'
 
 export default {
   name: 'FavView',
   components: {
     MovieSearch,
-    MovieCard
+    MovieCard,
+    MovieFilterSort
   },
   data() {
     return {
@@ -106,10 +107,6 @@ export default {
       } else if (sortOrder === 'rating') {
         this.favorites.sort((a, b) => b.movie.vote_average - a.movie.vote_average)
       }
-    },
-    handleCardClick(movie) {
-      console.log('click')
-      this.selectedMovie = movie
     }
   }
 }
