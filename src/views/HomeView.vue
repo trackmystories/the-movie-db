@@ -73,7 +73,15 @@ export default {
               releaseDate: movie.release_date,
               voteAverage: movie.vote_average,
               posterPath: movie.poster_path,
-              overview: movie.overview
+              overview: movie.overview,
+              adult: movie.adult,
+              backdropPath: movie.backdrop_path,
+              genreIds: movie.genre_ids,
+              originalLanguage: movie.original_language,
+              originalTitle: movie.original_title,
+              popularity: movie.popularity,
+              video: movie.video,
+              voteCount: movie.vote_count
             }))
           )
           this.totalPages = json.total_pages

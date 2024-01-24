@@ -39,39 +39,20 @@ export default {
       searchQuery: ''
     }
   },
-
   mounted() {
     this.fetchFavorites()
   },
   methods: {
     fetchFavorites() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
+      console.log('favorites', favorites)
       this.originalFavorites = Object.values(favorites)
-      this.favorites = this.originalFavorites
-    },
-
-    handleFilterSortChange(filterSortData) {
-      this.currentPage = 1
-      this.movies = []
-      this.fetchMovies(filterSortData.genre, filterSortData.sort)
+      this.favorites = [...this.originalFavorites]
     },
 
     handleSearch(searchQuery) {
       this.searchQuery = searchQuery.toLowerCase()
-      this.favorites = this.originalFavorites.filter((favorite) =>
-        favorite.movie.title.toLowerCase().includes(this.searchQuery)
-      )
-    },
-
-    favoriteButtonStyle(movie) {
-      return {
-        backgroundColor: this.isFavorite(movie) ? 'green' : 'orange',
-        color: 'white',
-        padding: '10px',
-        margin: '10px',
-        border: 'none',
-        cursor: 'pointer'
-      }
+      this.applyFilterAndSort()
     },
 
     toggleFavorite(movie) {
@@ -82,7 +63,6 @@ export default {
         let note = prompt('Add a note for this movie:')
         favorites[movie.id] = { movie, note }
       }
-
       localStorage.setItem('favorites', JSON.stringify(favorites))
       this.fetchFavorites()
     },
@@ -91,28 +71,46 @@ export default {
       return this.favorites.some((fav) => fav.movie.id === movie.id)
     },
 
-    filterFavorites(genre) {
-      try {
-        console.log('Filtering by genre:', genre)
-        if (!genre) {
-          this.favorites = [...this.originalFavorites]
-        } else {
-          this.favorites = this.originalFavorites.filter(
-            (favorite) =>
-              favorite.movie.genre_ids && favorite.movie.genre_ids.includes(parseInt(genre))
-          )
-        }
-      } catch (error) {
-        console.error('Error in filterFavorites:', error)
+    applyFilterAndSort(filterSortData = {}) {
+      let filtered = [...this.originalFavorites]
+
+      // Apply search filter
+      if (this.searchQuery) {
+        filtered = filtered.filter((favorite) =>
+          favorite.movie.title.toLowerCase().includes(this.searchQuery)
+        )
       }
+
+      // Filter by genre if specified
+      if (filterSortData.genre) {
+        filtered = filtered.filter(
+          (favorite) =>
+            favorite.movie.genreIds &&
+            favorite.movie.genreIds.includes(parseInt(filterSortData.genre))
+        )
+      }
+
+      // Sort by the specified order
+      switch (filterSortData.sort) {
+        case 'title':
+          filtered.sort((a, b) => a.movie.title.localeCompare(b.movie.title))
+          break
+        case 'rating':
+          filtered.sort((a, b) => b.movie.vote_average - a.movie.vote_average)
+          break
+        case 'popularity.asc':
+          filtered.sort((a, b) => a.movie.popularity - b.movie.popularity)
+          break
+        case 'popularity.desc':
+          filtered.sort((a, b) => b.movie.popularity - a.movie.popularity)
+          break
+      }
+
+      this.favorites = filtered
     },
 
-    sortFavorites(sortOrder) {
-      if (sortOrder === 'title') {
-        this.favorites.sort((a, b) => a.movie.title.localeCompare(b.movie.title))
-      } else if (sortOrder === 'rating') {
-        this.favorites.sort((a, b) => b.movie.vote_average - a.movie.vote_average)
-      }
+    handleFilterSortChange(filterSortData) {
+      this.applyFilterAndSort(filterSortData)
     }
   }
 }
