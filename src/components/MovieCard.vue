@@ -1,3 +1,4 @@
+Copy code
 <template>
   <div class="movie-card">
     <h1>
@@ -10,7 +11,10 @@
       <p>Release Date: {{ movie.releaseDate }}</p>
       <p>Rating: {{ movie.voteAverage }}</p>
     </div>
-    <button :style="favoriteButtonStyle" @click="toggleFavorite">
+    <button
+      :class="['favorite-button', isFavorite ? 'favorite' : 'non-favorite']"
+      @click="toggleFavorite"
+    >
       {{ isFavorite ? 'Unmark Favorite' : 'Mark as Favorite' }}
     </button>
   </div>
@@ -31,15 +35,6 @@ export default {
   computed: {
     movieImageUrl() {
       return `https://image.tmdb.org/t/p/w342${this.movie.posterPath}`
-    },
-    favoriteButtonStyle() {
-      return {
-        backgroundColor: this.isFavorite ? 'green' : 'orange',
-        color: 'white',
-        padding: '10px',
-        border: 'none',
-        cursor: 'pointer'
-      }
     }
   },
   methods: {
@@ -76,5 +71,20 @@ export default {
 .click-card {
   font-size: 1rem;
   color: blue;
+}
+
+.favorite-button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.favorite-button.favorite {
+  background-color: green;
+}
+
+.favorite-button.non-favorite {
+  background-color: orange;
 }
 </style>

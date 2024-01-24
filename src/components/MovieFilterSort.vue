@@ -43,9 +43,6 @@ export default {
 
 <style>
 .custom-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
   background-color: white;
   border: 1px solid #ccc;
   padding: 8px;
@@ -53,17 +50,17 @@ export default {
   width: 200px;
   font-size: 16px;
   cursor: pointer;
+  margin: 20px;
 }
 
 .custom-select::after {
-  content: '\25BC'; /* Down arrow */
+  content: '\25BC';
   position: absolute;
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
 }
 
-/* Style individual options */
 .custom-select option {
   background-color: white;
   color: #333;
