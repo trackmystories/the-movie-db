@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     movieImageUrl() {
-      return `https://image.tmdb.org/t/p/w300${this.movie.poster_path}`
+      return `https://image.tmdb.org/t/p/w342/${this.movie.poster_path}`
     },
     favoriteButtonStyle() {
       return {
