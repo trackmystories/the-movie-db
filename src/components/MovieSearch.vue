@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 .input {
-  widht: 5000px;
+  width: 420px;
   height: 50px;
   padding: 5px;
   margin-top: 20px;
