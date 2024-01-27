@@ -3,8 +3,8 @@
     <movie-filter-sort @filter-sort-changed="handleFilterSortChange"></movie-filter-sort>
 
     <h1>Movie List</h1>
-    <ul v-if="movies.length">
-      <li class="li" v-for="movie in movies" :key="movie.id">
+    <div v-if="movies.length">
+      <div class="movie-item" v-for="movie in movies" :key="movie.id">
         <movie-card
           :movie="movie"
           :is-favorite="isFavorite(movie)"
@@ -16,8 +16,8 @@
           :clickCard="'click to view details screen'"
           :showCardClickButton="true"
         />
-      </li>
-    </ul>
+      </div>
+    </div>
     <button v-if="currentPage < totalPages" @click="loadMoreMovies">Load More</button>
     <p v-else>Loading movies...</p>
   </div>
@@ -55,7 +55,6 @@ export default {
       }
 
       if (sort) {
-        // Transform 'rating.desc' to 'vote_average.desc' and 'rating.asc' to 'vote_average.asc'
         let apiSortParam = sort.replace('rating.', 'vote_average.')
         url += `&sort_by=${encodeURIComponent(apiSortParam)}`
       }
@@ -159,6 +158,10 @@ export default {
   margin: 100px;
 }
 #movie-list-container .li {
+  list-style-type: none;
+}
+
+#movie-list-container .movie-item {
   list-style-type: none;
 }
 </style>

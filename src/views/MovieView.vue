@@ -78,12 +78,15 @@ export default {
 }
 
 @media (max-width: 480px) {
+  #movie-view {
+    margin: auto;
+  }
   .movie-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 375px;
+    margin: auto;
   }
 }
 </style>
