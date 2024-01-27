@@ -1,19 +1,26 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
   <header>
     <nav>
-      <RouterLink to="/" class="nav-link" :class="{ active: $route.path === '/' }">Home</RouterLink>
-      <RouterLink to="/favorites" class="nav-link" :class="{ active: $route.path === '/favorites' }"
-        >Favorites</RouterLink
-      >
+      <div id="nav-container">
+        <RouterLink to="/" class="nav-link" :class="{ active: $route.path === '/' }"
+          >Home</RouterLink
+        >
+        <RouterLink
+          to="/favorites"
+          class="nav-link"
+          :class="{ active: $route.path === '/favorites' }"
+          >Favorites</RouterLink
+        >
+      </div>
     </nav>
   </header>
 
   <RouterView />
 </template>
+
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+</script>
 
 <style scoped>
 header {
@@ -21,38 +28,44 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #e7e7e7;
+  height: 80px;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  z-index: 1000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 nav {
+  display: flex;
+  justify-content: center;
   width: 100%;
-  text-align: center;
-  padding: 1rem 0;
-  background-color: #333;
+}
+
+#nav-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .nav-link {
-  margin: 0 1rem;
+  margin: 0 15px;
   text-decoration: none;
   color: #fff;
-  font-weight: bold;
-  transition: color 0.3s;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
 }
 
-.nav-link:hover {
-  color: green;
-}
-
+.nav-link:hover,
 .active {
-  color: red;
+  color: #4caf50;
 }
 
-@media (max-width: 600px) {
-  nav a {
-    display: block;
-    margin: 0.5rem 0;
+@media (max-width: 768px) {
+  .nav-link {
+    font-size: 1rem; /* Adjust font size for smaller screens */
   }
 }
 </style>

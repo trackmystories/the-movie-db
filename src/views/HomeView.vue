@@ -18,7 +18,9 @@
         />
       </div>
     </div>
-    <button v-if="currentPage < totalPages" @click="loadMoreMovies">Load More</button>
+    <button class="loadmore" v-if="currentPage < totalPages" @click="loadMoreMovies">
+      Load More
+    </button>
     <p v-else>Loading movies...</p>
   </div>
 </template>
@@ -160,5 +162,14 @@ export default {
 
 #movie-list-container .movie-item {
   width: 100%;
+}
+
+.loadmore {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  width: 100%;
+  background-color: #333;
 }
 </style>
