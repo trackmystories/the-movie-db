@@ -7,16 +7,19 @@
         :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
         alt="Movie Poster"
       />
-      <p>PG 18 : {{ movie.adult }}</p>
-      <p>Release Date: {{ movie.release_date }}</p>
-      <p>Rating: {{ movie.vote_average }}</p>
-      <p>
-        Genres: <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}</span>
-      </p>
-      <p>Original Language: {{ movie.original_language }}</p>
-      <p>Popularity: {{ movie.popularity }}</p>
-      <p>Vote Count : {{ movie.voteCount }}</p>
-      <p>Overview: {{ movie.overview }}</p>
+      <div class="movie-detials">
+        <p><b>PG 18 : </b>{{ movie.adult }}</p>
+        <p><b>Release Date: </b>{{ movie.release_date }}</p>
+        <p><b>Rating: </b>{{ movie.vote_average }}</p>
+        <p>
+          <b>Genres: </b>
+          <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}</span>
+        </p>
+        <p><b>Original Language: </b>{{ movie.original_language }}</p>
+        <p><b>Popularity: </b>{{ movie.popularity }}</p>
+        <p><b>Vote Count : </b>{{ movie.voteCount }}</p>
+        <p><b>Overview: </b>{{ movie.overview }}</p>
+      </div>
     </div>
   </div>
   <div v-else>Loading movie details...</div>
@@ -58,6 +61,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
   margin-top: 80px;
 }
 
@@ -70,8 +74,8 @@ export default {
 }
 
 #movie-view .img {
-  width: auto;
-  height: 500px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
@@ -82,6 +86,7 @@ export default {
 @media (max-width: 480px) {
   #movie-view {
     margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
   }
   .movie-container {
     display: flex;
@@ -89,6 +94,13 @@ export default {
     align-items: center;
     justify-content: center;
     margin: auto;
+    margin-top: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .movie-detials {
+    align-items: flex-start;
+    justify-content: center;
   }
 }
 </style>
