@@ -5,11 +5,11 @@
     <img :src="movieImageUrl" alt="Movie Poster" class="movie-poster" />
 
     <div class="movie-info">
-      <p>popularity : {{ movie.popularity }}</p>
-      <p>PG 18 : {{ movie.adult }}</p>
-      <p>Release Date : {{ movie.releaseDate }}</p>
-      <p>Rating : {{ movie.voteAverage }}</p>
-      <p>Vote Count : {{ movie.voteCount }}</p>
+      <p><b>popularity :</b> {{ movie.popularity }}</p>
+      <p><b>PG 18 : </b>{{ movie.adult }}</p>
+      <p><b>Release Date :</b> {{ movie.releaseDate }}</p>
+      <p><b>Rating :</b> {{ movie.voteAverage }}</p>
+      <p><b>Vote Count : </b> {{ movie.voteCount }}</p>
     </div>
     <button v-if="showCardClickButton" @click="handleCardClick" class="click-card">
       {{ clickCard }}
@@ -22,7 +22,7 @@
     </button>
 
     <div v-if="note" class="note">
-      <p>Note: {{ note }}</p>
+      <p><b>Note : </b> {{ note }}</p>
     </div>
   </div>
 </template>
@@ -88,7 +88,7 @@ export default {
 .click-card {
   font-size: 1rem;
   color: #fff;
-  background-color: orange;
+  background-color: #6cb4ee;
   border: none;
   border-radius: 2px;
   font-size: 15px;
@@ -104,11 +104,11 @@ export default {
 }
 
 .favorite-button.favorite {
-  background-color: green;
+  background-color: orange;
 }
 
 .favorite-button.non-favorite {
-  background-color: orange;
+  background-color: green;
 }
 
 .note {
