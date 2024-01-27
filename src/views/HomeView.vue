@@ -14,6 +14,7 @@
           :show-summary="true"
           @card-clicked="handleCardClick"
           :clickCard="'click to view details screen'"
+          :showCardClickButton="true"
         />
       </li>
     </ul>
@@ -54,7 +55,9 @@ export default {
       }
 
       if (sort) {
-        url += `&sort_by=${encodeURIComponent(sort)}`
+        // Transform 'rating.desc' to 'vote_average.desc' and 'rating.asc' to 'vote_average.asc'
+        let apiSortParam = sort.replace('rating.', 'vote_average.')
+        url += `&sort_by=${encodeURIComponent(apiSortParam)}`
       }
 
       fetch(url, {

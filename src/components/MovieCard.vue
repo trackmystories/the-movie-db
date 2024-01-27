@@ -1,7 +1,7 @@
 <template>
   <div class="movie-card">
     <h1>Movie Detials</h1>
-    <button @click="handleCardClick" class="click-card">{{ clickCard }}</button>
+
     <img :src="movieImageUrl" alt="Movie Poster" class="movie-poster" />
 
     <div class="movie-info">
@@ -9,6 +9,9 @@
       <p>Release Date: {{ movie.releaseDate }}</p>
       <p>Rating: {{ movie.voteAverage }}</p>
     </div>
+    <button v-if="showCardClickButton" @click="handleCardClick" class="click-card">
+      {{ clickCard }}
+    </button>
     <button
       :class="['favorite-button', isFavorite ? 'favorite' : 'non-favorite']"
       @click="toggleFavorite"
@@ -28,7 +31,11 @@ export default {
     releaseDate: String,
     rating: Number,
     onCardClick: Function,
-    clickCard: String
+    clickCard: String,
+    showCardClickButton: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {
     movieImageUrl() {
@@ -50,6 +57,8 @@ export default {
 .movie-card {
   width: 320px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc;
   margin: 10px;
   border-radius: 8px;
@@ -68,11 +77,13 @@ export default {
 
 .click-card {
   font-size: 1rem;
-  color: blue;
-  border: #333 1px solid;
-  border-radius: 12px;
+  color: #fff;
+  background-color: orange;
+  border: none;
+  border-radius: 2px;
   font-size: 15px;
-  margin: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 .favorite-button {

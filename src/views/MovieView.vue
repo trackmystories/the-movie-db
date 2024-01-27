@@ -1,19 +1,21 @@
 <template>
   <div id="movie-view" v-if="movie">
-    <h1 class="text">Movie Details: {{ movie.title }}</h1>
-    <img
-      class="img"
-      :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-      alt="Movie Poster"
-    />
-    <p>Release Date: {{ movie.release_date }}</p>
-    <p>Rating: {{ movie.vote_average }}</p>
-    <p>
-      Genres: <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}</span>
-    </p>
-    <p>Original Language: {{ movie.original_language }}</p>
-    <p>Popularity: {{ movie.popularity }}</p>
-    <p>Overview: {{ movie.overview }}</p>
+    <div class="movie-container">
+      <h1 class="text">Movie Details: {{ movie.title }}</h1>
+      <img
+        class="img"
+        :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+        alt="Movie Poster"
+      />
+      <p>Release Date: {{ movie.release_date }}</p>
+      <p>Rating: {{ movie.vote_average }}</p>
+      <p>
+        Genres: <span v-for="genre in movie.genres" :key="genre.id">{{ genre.name }}</span>
+      </p>
+      <p>Original Language: {{ movie.original_language }}</p>
+      <p>Popularity: {{ movie.popularity }}</p>
+      <p>Overview: {{ movie.overview }}</p>
+    </div>
   </div>
   <div v-else>Loading movie details...</div>
 </template>
@@ -51,11 +53,18 @@ export default {
 <style scoped>
 #movie-view {
   display: flex;
-  width: 100%;
   flex-direction: column;
   align-items: center;
-  justify: center;
+  justify-content: center;
   margin-top: 80px;
+}
+
+.movie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
 }
 
 #movie-view .img {
@@ -66,5 +75,15 @@ export default {
 
 .text {
   font-size: 30px;
+}
+
+@media (max-width: 480px) {
+  .movie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 375px;
+  }
 }
 </style>

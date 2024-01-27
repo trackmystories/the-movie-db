@@ -12,6 +12,7 @@
           :release-date="favorite.movie.release_date"
           :rating="favorite.movie.vote_average"
           :show-summary="false"
+          :showCardClickButton="false"
         />
         <p>Note: {{ favorite.note }}</p>
       </li>
