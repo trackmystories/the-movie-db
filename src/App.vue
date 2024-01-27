@@ -65,7 +65,7 @@ nav {
 
 @media (max-width: 768px) {
   .nav-link {
-    font-size: 1rem; /* Adjust font size for smaller screens */
+    font-size: 1rem;
   }
 }
 </style>
