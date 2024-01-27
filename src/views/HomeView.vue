@@ -157,11 +157,8 @@ export default {
   justify-content: center;
   margin: 100px;
 }
-#movie-list-container .li {
-  list-style-type: none;
-}
 
 #movie-list-container .movie-item {
-  list-style-type: none;
+  width: 100%;
 }
 </style>

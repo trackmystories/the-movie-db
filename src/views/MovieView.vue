@@ -7,6 +7,7 @@
         :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
         alt="Movie Poster"
       />
+      <p>PG 18 : {{ movie.adult }}</p>
       <p>Release Date: {{ movie.release_date }}</p>
       <p>Rating: {{ movie.vote_average }}</p>
       <p>
@@ -14,6 +15,7 @@
       </p>
       <p>Original Language: {{ movie.original_language }}</p>
       <p>Popularity: {{ movie.popularity }}</p>
+      <p>Vote Count : {{ movie.voteCount }}</p>
       <p>Overview: {{ movie.overview }}</p>
     </div>
   </div>

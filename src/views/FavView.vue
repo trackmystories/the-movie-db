@@ -3,8 +3,8 @@
     <movie-search @search-applied="handleSearch"></movie-search>
     <movie-filter-sort @filter-sort-changed="handleFilterSortChange"></movie-filter-sort>
     <h1>Favorite Movies</h1>
-    <ul v-if="favorites.length">
-      <li class="li" v-for="favorite in favorites" :key="favorite.movie.id">
+    <div v-if="favorites.length">
+      <div class="favorite-item" v-for="favorite in favorites" :key="favorite.movie.id">
         <movie-card
           :movie="favorite.movie"
           :is-favorite="isFavorite(favorite.movie)"
@@ -13,10 +13,10 @@
           :rating="favorite.movie.vote_average"
           :show-summary="false"
           :showCardClickButton="false"
+          :note="favorite.note"
         />
-        <p>Note: {{ favorite.note }}</p>
-      </li>
-    </ul>
+      </div>
+    </div>
     <p v-else>No favorites added yet.</p>
   </div>
 </template>
@@ -126,7 +126,7 @@ export default {
   margin-top: 100px;
 }
 
-#fav-container .li {
-  list-style-type: none;
+#fav-container .favorite-item {
+  width: 100%;
 }
 </style>

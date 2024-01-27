@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="search-filter">
     <select v-model="selectedGenre" @change="applyFilterSort" class="custom-select">
       <option value="">Select Genre</option>
       <option v-for="genre in genres" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
@@ -116,6 +116,13 @@ export default {
 </script>
 
 <style>
+.search-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .custom-select {
   background-color: white;
   border: 1px solid #ccc;

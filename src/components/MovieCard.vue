@@ -1,13 +1,15 @@
 <template>
   <div class="movie-card">
-    <h1>Movie Detials</h1>
+    <h1>{{ movie.title }}</h1>
 
     <img :src="movieImageUrl" alt="Movie Poster" class="movie-poster" />
 
     <div class="movie-info">
-      <h3>{{ movie.title }}</h3>
-      <p>Release Date: {{ movie.releaseDate }}</p>
-      <p>Rating: {{ movie.voteAverage }}</p>
+      <p>popularity : {{ movie.popularity }}</p>
+      <p>PG 18 : {{ movie.adult }}</p>
+      <p>Release Date : {{ movie.releaseDate }}</p>
+      <p>Rating : {{ movie.voteAverage }}</p>
+      <p>Vote Count : {{ movie.voteCount }}</p>
     </div>
     <button v-if="showCardClickButton" @click="handleCardClick" class="click-card">
       {{ clickCard }}
@@ -18,6 +20,10 @@
     >
       {{ isFavorite ? 'Unmark Favorite' : 'Mark as Favorite' }}
     </button>
+
+    <div v-if="note" class="note">
+      <p>Note: {{ note }}</p>
+    </div>
   </div>
 </template>
 
@@ -35,6 +41,10 @@ export default {
     showCardClickButton: {
       type: Boolean,
       default: true
+    },
+    note: {
+      type: String,
+      default: ''
     }
   },
   computed: {
@@ -99,5 +109,14 @@ export default {
 
 .favorite-button.non-favorite {
   background-color: orange;
+}
+
+.note {
+  padding: 4px;
+  margin-top: 2px;
+  border: 0.5px solid #333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  border-radius: 5px;
 }
 </style>
