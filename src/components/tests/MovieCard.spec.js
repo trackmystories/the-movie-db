@@ -1,8 +1,6 @@
-// MovieCard.spec.js
-
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import MovieCard from '@/components/MovieCard.vue' // Adjust the import path based on your project structure
+import MovieCard from '@/components/MovieCard.vue'
 
 describe('MovieCard.vue', () => {
   const movie = {

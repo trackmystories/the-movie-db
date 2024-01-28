@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import MovieFilterSort from '@/components/MovieFilterSort.vue' // Adjust the import path as needed
+import MovieFilterSort from '@/components/MovieFilterSort.vue'
 
 describe('SearchFilterComponent', () => {
   it('renders two select dropdowns', () => {
