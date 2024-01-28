@@ -75,14 +75,12 @@ export default {
     applyFilterAndSort(filterSortData = {}) {
       let filtered = [...this.originalFavorites]
 
-      // Apply search filter
       if (this.searchQuery) {
         filtered = filtered.filter((favorite) =>
           favorite.movie.title.toLowerCase().includes(this.searchQuery)
         )
       }
 
-      // Filter by genre if specified
       if (filterSortData.genre) {
         filtered = filtered.filter(
           (favorite) =>
@@ -91,14 +89,7 @@ export default {
         )
       }
 
-      // Sort by the specified order
       switch (filterSortData.sort) {
-        case 'title':
-          filtered.sort((a, b) => a.movie.title.localeCompare(b.movie.title))
-          break
-        case 'rating':
-          filtered.sort((a, b) => b.movie.vote_average - a.movie.vote_average)
-          break
         case 'popularity.asc':
           filtered.sort((a, b) => a.movie.popularity - b.movie.popularity)
           break
