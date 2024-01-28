@@ -16,6 +16,12 @@ npm run dev
 npm run build
 ```
 
+### run test
+
+```sh
+npm run test:unit
+```
+
 # the-movie-db
 
 deploy link:
