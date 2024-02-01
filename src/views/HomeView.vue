@@ -46,18 +46,21 @@ export default {
   },
   methods: {
     fetchMovies(genre = '', sort = '') {
+      console.log('Fetching movies with Genre:', genre, 'Sort:', sort)
       const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
       const token =
         'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYWZiOWU0MzEwZTU3MmQ0NTY0Y2NjMjU1ZDI2NzMyMiIsInN1YiI6IjY1NTM1MjM1ZDRmZTA0MDEzOTgxMjVmNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CEYYvydoCUUJgTR7eskapz3sGiU-Y8gjzE9nmJMXOdE'
 
       let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&include_adult=false&include_video=false&page=${this.currentPage}`
-
+      console.log('Constructed URL:', url)
       if (genre) {
+        console.log('genre', genre)
         url += `&with_genres=${encodeURIComponent(genre)}`
       }
 
       if (sort) {
         let apiSortParam = sort.replace('rating.', 'vote_average.')
+        console.log('apiSortParam', apiSortParam)
         url += `&sort_by=${encodeURIComponent(apiSortParam)}`
       }
 
@@ -70,6 +73,7 @@ export default {
       })
         .then((res) => res.json())
         .then((json) => {
+          console.log('Fetched Movies:', json.results)
           this.movies = this.movies.concat(
             json.results.map((movie) => ({
               id: movie.id,
@@ -90,11 +94,14 @@ export default {
           )
           this.totalPages = json.total_pages
         })
-        .catch((err) => console.error('error:' + err))
+        .catch((err) => {
+          console.error('Fetch Movies Error:', err)
+        })
     },
 
     toggleFavorite(movie) {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
+      console.log('Favorites before update:', favorites)
       if (favorites[movie.id]) {
         delete favorites[movie.id]
       } else {
@@ -104,16 +111,19 @@ export default {
 
       localStorage.setItem('favorites', JSON.stringify(favorites))
       this.updateFavorites()
+      console.log('Favorites after update:', favorites)
     },
 
     updateFavorites() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
       this.favorites = Object.values(favorites)
       console.log('Object.values(favorites)', Object.values(favorites))
+      console.log('Updating favorites:', favorites)
     },
 
     fetchFavorites() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
+      console.log('Fetched favorites:', favorites)
       this.favorites = Object.values(favorites)
     },
 
@@ -130,12 +140,14 @@ export default {
 
     loadMoreMovies() {
       if (this.currentPage < this.totalPages) {
+        console.log('Loading more movies. Current page:', this.currentPage)
         this.currentPage++
         this.fetchMovies()
       }
     },
 
     handleFilterSortChange(filterSortData) {
+      console.log('Handling filter/sort change:', filterSortData)
       this.currentPage = 1
       this.movies = []
       this.fetchMovies(filterSortData.genre, filterSortData.sort)
@@ -145,6 +157,7 @@ export default {
     }
   },
   mounted() {
+    console.log('Component mounted. Fetching initial movies and favorites.')
     this.fetchMovies()
     this.fetchFavorites()
   }

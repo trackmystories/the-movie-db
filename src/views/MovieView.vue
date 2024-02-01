@@ -44,12 +44,16 @@ export default {
   methods: {
     fetchMovieDetails() {
       const apiKey = '9378bcf55958be3e4ed2a54ec277b1c7'
+      console.log('Fetching movie details for ID:', this.id)
       fetch(`https://api.themoviedb.org/3/movie/${this.id}?api_key=${apiKey}&language=en-US`)
         .then((res) => res.json())
         .then((data) => {
+          console.log('Constructed URL for API request:', data)
           this.movie = data
         })
-        .catch((err) => console.error('error:', err))
+        .catch((err) => {
+          console.error('Error fetching movie details:', err)
+        })
     }
   }
 }

@@ -46,18 +46,22 @@ export default {
   methods: {
     fetchFavorites() {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
-      console.log('favorites', favorites)
+      console.log('Fetched favorites from localStorage:', favorites)
       this.originalFavorites = Object.values(favorites)
       this.favorites = [...this.originalFavorites]
+      console.log('Processed favorites:', this.favorites)
     },
 
     handleSearch(searchQuery) {
       this.searchQuery = searchQuery.toLowerCase()
+      console.log('Search query:', this.searchQuery)
       this.applyFilterAndSort()
+      console.log('Favorites after applying search:', this.favorites)
     },
 
     toggleFavorite(movie) {
       let favorites = JSON.parse(localStorage.getItem('favorites')) || {}
+      console.log('Toggling favorite for movie:', movie)
       if (favorites[movie.id]) {
         delete favorites[movie.id]
       } else {
@@ -66,6 +70,7 @@ export default {
       }
       localStorage.setItem('favorites', JSON.stringify(favorites))
       this.fetchFavorites()
+      console.log('Updated favorites:', favorites)
     },
 
     isFavorite(movie) {
@@ -74,6 +79,7 @@ export default {
 
     applyFilterAndSort(filterSortData = {}) {
       let filtered = [...this.originalFavorites]
+      console.log('Applying filter and sort:', filterSortData)
 
       if (this.searchQuery) {
         filtered = filtered.filter((favorite) =>
@@ -99,9 +105,11 @@ export default {
       }
 
       this.favorites = filtered
+      console.log('Favorites after filter and sort:', this.favorites)
     },
 
     handleFilterSortChange(filterSortData) {
+      console.log('Filter/Sort changed:', filterSortData)
       this.applyFilterAndSort(filterSortData)
     }
   }
