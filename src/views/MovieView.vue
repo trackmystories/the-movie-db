@@ -17,7 +17,7 @@
         </p>
         <p><b>Original Language: </b>{{ movie.original_language }}</p>
         <p><b>Popularity: </b>{{ movie.popularity }}</p>
-        <p><b>Vote Count : </b>{{ movie.voteCount }}</p>
+        <p><b>Vote Count : </b>{{ movie.vote_count }}</p>
         <p><b>Overview: </b>{{ movie.overview }}</p>
       </div>
     </div>
